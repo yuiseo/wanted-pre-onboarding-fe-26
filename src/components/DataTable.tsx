@@ -19,6 +19,8 @@ export default function DataTable(){
 
   const PER_PAGE = 10;
 
+  const totalPrice = products.reduce((acc, product) => acc + product.price, 0);
+
   const getMockData = async (pageNum: number) => {
     return new Promise<{ datas: MockData[]; isEnd: boolean }>((resolve) => {
       setTimeout(() => {
@@ -64,6 +66,7 @@ export default function DataTable(){
   return (
       <Wrapper>
         <h1>Product List</h1>
+        <h2>Total Price : ${totalPrice}</h2>
         <Table>
           <thead>
             <tr>
