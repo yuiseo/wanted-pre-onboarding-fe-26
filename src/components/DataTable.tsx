@@ -66,7 +66,7 @@ export default function DataTable(){
   return (
       <Wrapper>
         <h1>Product List</h1>
-        <h2>Total Price : ${totalPrice}</h2>
+        <h2>Total Price : ${totalPrice.toLocaleString()}</h2>
         <Table>
           <thead>
             <tr>
@@ -84,7 +84,7 @@ export default function DataTable(){
               >
                 <td>{product.productId}</td>
                 <td>{product.productName}</td>
-                <td>${product.price}</td>
+                <td>${product.price.toLocaleString()}</td>
                 <td>{product.boughtDate}</td>
               </ProductRow>
             ))}
