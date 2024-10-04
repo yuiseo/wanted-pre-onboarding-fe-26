@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { MOCK_DATA } from './assets/mock_data';
 
 type MockData = {
@@ -9,7 +9,22 @@ type MockData = {
   boughtDate: string;
 };
 
-const Wrapper = styled.area`
+const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5; /* 배경색 설정 */
+  }
+`;
+
+const Wrapper = styled.div`  // 태그를 area에서 div로 수정
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,7 +43,6 @@ const ProductItem = styled.div`
   margin-bottom: 5px;
 `;
 
-
 function App() {
   const [products, setProducts] = useState<MockData[]>([]);
   const [page, setPage] = useState(1);
@@ -39,7 +53,6 @@ function App() {
   const PER_PAGE = 10;
 
   const getMockData = async (pageNum: number) => {
-    setLoading(true);
     return new Promise<{ datas: MockData[]; isEnd: boolean }>((resolve) => {
       setTimeout(() => {
         const startIdx = PER_PAGE * (pageNum - 1);
@@ -67,10 +80,10 @@ function App() {
     [loading, hasMore]
   );
 
+  // 페이지가 변경될 때마다 데이터 로드
   useEffect(() => {
     const fetchData = async () => {
       if (!hasMore) return;
-
       setLoading(true);
       const { datas, isEnd } = await getMockData(page);
 
@@ -83,21 +96,24 @@ function App() {
   }, [page]);
 
   return (
-    <Wrapper>
-      <h1>Product List</h1>
-      {products.map((product, index) => (
-        <ProductItem
-          key={product.productId}
-          ref={index === products.length - 1 ? lastElementRef : null} // 마지막 아이템에 ref 추가
-        >
-          <h2>{product.productName}</h2>
-          <p>Price: ${product.price}</p>
-          <p>Bought Date: {product.boughtDate}</p>
-        </ProductItem>
-      ))}
-      {loading && <p>Loading...</p>}
-      {!hasMore && <p>End of List</p>}
-    </Wrapper>
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <h1>Product List</h1>
+        {products.map((product, index) => (
+          <ProductItem
+            key={product.productId}
+            ref={index === products.length - 1 ? lastElementRef : null} // 마지막 아이템에 ref 추가
+          >
+            <h2>{product.productName}</h2>
+            <p>Price: ${product.price}</p>
+            <p>Bought Date: {product.boughtDate}</p>
+          </ProductItem>
+        ))}
+        {loading && <p>Loading...</p>}
+        {!hasMore && <p>End of List</p>}
+      </Wrapper>
+    </>
   );
 }
 
