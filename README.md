@@ -1,7 +1,7 @@
 # 프리온보딩 FE 챌린지 10월 (2024) | 리액트 오픈소스 펼쳐보기
 
-## 챌린지 과제 제출 방법
-> 과제를 진행한 repository의 링크를 Gist Comment에 남겨주세요.
+## 배포 링크
+https://wanted-pre-onboarding-fe-26.vercel.app/
 
 ## 챌린지 과제 내용
 1. 하나의 SinglePage에 Intersection Observer를 이용해 무한스크롤을 구현하세요.
